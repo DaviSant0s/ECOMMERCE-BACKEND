@@ -1,7 +1,10 @@
 const User = require('../model/user');
 
 const validator = require('validator');
+const jwt = require('jsonwebtoken');
+
 const { compareHash } = require('../utils/hashProvider');
+const { JWT_SECRET } = require('../configs/env');
 
 const signin =  async (req, res) => {
     const { hash_password, email } = req.body
@@ -26,9 +29,17 @@ const signin =  async (req, res) => {
         const user = await User.findOne({ raw: true, where: { email }});
 
         if (!user) throw new Error();
-
+  
         const isValidPassword = await compareHash(hash_password, user.hash_password);
         if (!isValidPassword) throw new Error();
+
+        const id = user.id;
+
+        const token = jwt.sign({ id }, JWT_SECRET, { expiresIn : 300});
+
+        const fullName = `${user.firstName} ${user.lastName}`;
+
+        return res.status(200).json({token, user: {...user, fullName}});
 
     } catch (error) {
         return res.status(400).json({
