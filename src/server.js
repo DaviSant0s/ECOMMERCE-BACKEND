@@ -9,7 +9,9 @@ const conn = require('./database/conn');
 
 const userRoutes = require('./routes/user');
 const authenticateRoutes = require('./routes/authenticate');
+const adminRoutes = require('./routes/admin/authenticate');
 
+app.use('/api', adminRoutes);
 app.use('/api', authenticateRoutes);
 app.use('/api', userRoutes);
 

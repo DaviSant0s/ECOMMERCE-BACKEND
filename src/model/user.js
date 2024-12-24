@@ -1,14 +1,14 @@
 const db = require('../database/conn');
 
 const { generateHash } = require('../utils/hashProvider');
+const uuid = require('uuid')
 
 const { DataTypes } = require('sequelize');
 
 const User = db.define('User', {
     id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         primaryKey: true,
-        autoIncrement: true
     }, 
 
     firstName: {
@@ -63,7 +63,9 @@ const User = db.define('User', {
 
 User.beforeCreate( async (user) => {
     const hashedPassword = await generateHash(user.hash_password);
+    const hashed_id = uuid.v4()
     user.hash_password = hashedPassword;
+    user.id = hashed_id;
 });
 
 User.beforeUpdate( async (user) => {
