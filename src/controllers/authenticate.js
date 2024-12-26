@@ -1,6 +1,5 @@
 const User = require('../model/user');
 
-const validator = require('validator');
 const jwt = require('jsonwebtoken');
 
 const { compareHash } = require('../utils/hashProvider');
@@ -8,21 +7,6 @@ const { JWT_SECRET } = require('../configs/env');
 
 const signin =  async (req, res) => {
     const { hash_password, email } = req.body
-
-    const signinErrorMessage = (message) => {
-        return {
-            error: "@authenticate/signin",
-            message: message
-        };
-    }
-
-    // Verifica se o campo de email e senha vieram vazios
-    if(!email) return res.status(400).json(signinErrorMessage("Email is required"));
-    if(!hash_password) return res.status(400).json(signinErrorMessage("Password is required"));
-
-    // validação do email
-    const isEmail = validator.isEmail(email);
-    if(!isEmail) return res.status(400).json(signinErrorMessage("Invalid email format"));
 
     try {
         // 'raw: true' possibilitar retornar os dados do banco como um objeto javascript simples
@@ -49,37 +33,14 @@ const signin =  async (req, res) => {
     }
 }
 
+
 const signup = async (req, res) => {
 
     const { hash_password, email, 
             firstName, lastName, 
             username, contactNumber, 
-            profilePicture } = req.body
-
-            
-    const signupErrorMessage = (message) => {
-        return {
-            error: "@authenticate/signup",
-            message: message
-        };
-    }
-
-    // Verificando se os campos estão vazios
-    if(!email) return res.status(400).json(signupErrorMessage("Email is required"));
-    if(!hash_password) return res.status(400).json(signupErrorMessage("Password is required"));
-    if(!firstName) return res.status(400).json(signupErrorMessage("First Name is required"));
-    if(!lastName) return res.status(400).json(signupErrorMessage("Last Name is required"));
-    // if(!username) return res.status(400).json(signupErrorMessage("Username is required"));
-
-    // validação do email
-    const isEmail = validator.isEmail(email);
-    if(!isEmail) return res.status(400).json(signupErrorMessage("Invalid email format"));
-
-    // validação de tamanho de first e last name
-    if(firstName.length < 3) return res.status(400).json(signupErrorMessage("The First Name provided is too short"));
-    if(firstName.length > 20) return res.status(400).json(signupErrorMessage("The First Name provided is too long"));
-    if(lastName.length < 3) return res.status(400).json(signupErrorMessage("The Last Name provided is too short"));
-    if(lastName.length > 20) return res.status(400).json(signupErrorMessage("The Last Name provided is too long"));
+            profilePicture 
+    } = req.body
 
 
     const UserData = { 
@@ -92,9 +53,6 @@ const signup = async (req, res) => {
         profilePicture 
     }
 
-    
-
-    
     try {
         const _user = await User.findOne({raw: true, where: {email}});
 

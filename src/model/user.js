@@ -43,7 +43,10 @@ const User = db.define('User', {
 
     hash_password: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            min: 6,
+        }
     },
 
     role: {
