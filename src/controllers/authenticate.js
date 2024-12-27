@@ -18,8 +18,9 @@ const signin =  async (req, res) => {
         if (!isValidPassword) throw new Error();
 
         const id = user.id;
+        const role = user.role;
 
-        const token = jwt.sign({ id }, JWT_SECRET, { expiresIn : 300});
+        const token = jwt.sign({ id, role }, JWT_SECRET, { expiresIn : 300});
 
         const fullName = `${user.firstName} ${user.lastName}`;
 

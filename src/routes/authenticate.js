@@ -1,12 +1,10 @@
 const { Router } = require('express');
 const routes = Router();
 
-const AuthController = require('../controllers/authenticate');
+const { signup, signin } = require('../controllers/authenticate');
 const { validateSignup, validateSignin } = require('../middlewares/validation/authenticate');
 
-routes.post('/signup', validateSignup, AuthController.signup);
-routes.post('/signin', validateSignin, AuthController.signin);
-
-
+routes.post('/signup', validateSignup, signup);
+routes.post('/signin', validateSignin, signin);
 
 module.exports = routes;

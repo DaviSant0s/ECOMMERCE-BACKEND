@@ -19,8 +19,9 @@ const signin =  async (req, res) => {
         if (!isValidPassword || user.role != 'admin') throw new Error();
 
         const id = user.id;
+        const role = user.role;
 
-        const token = jwt.sign({ id }, JWT_SECRET, { expiresIn : 300});
+        const token = jwt.sign({ id, role}, JWT_SECRET, { expiresIn : 300});
 
         const fullName = `${user.firstName} ${user.lastName}`;
 
@@ -42,7 +43,7 @@ const signup = async (req, res) => {
     } = req.body
 
 
-    const UserData = { 
+    const userData = { 
         hash_password, 
         email, 
         firstName, 
@@ -57,7 +58,7 @@ const signup = async (req, res) => {
 
         if (_user) throw new Error('Admin already registered');
 
-        const user = await User.create(UserData);
+        const user = await User.create(userData);
 
         if(!user) throw new Error();
 

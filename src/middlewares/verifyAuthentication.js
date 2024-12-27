@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = require('../../configs/env');
+const { JWT_SECRET } = require('../configs/env');
 
 const requiSignin = (req, res, next) => {
     const { authorization } = req.headers;
@@ -31,6 +31,34 @@ const requiSignin = (req, res, next) => {
 
 }
 
+const verifyAdmin = (req, res, next) => {
+    const { role } = req.user;
+
+    if (role !== 'admin') {
+        return res.status(401).json({
+            error: "@authenticate/verifyAdmin",
+            message: "Admin access danied"
+        });
+    }
+
+    return next();
+
+}
+
+const verifyUser = (req, res, next) => {
+    const { role } = req.user;
+
+    if (role !== 'user') {
+        return res.status(401).json({
+            error: "@authenticate/verifyAdmin",
+            message: "User access danied"
+        });
+    }
+
+}
+
 module.exports = {
-    requiSignin
+    requiSignin,
+    verifyAdmin,
+    verifyUser
 }
