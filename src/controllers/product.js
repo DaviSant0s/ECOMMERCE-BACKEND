@@ -1,5 +1,6 @@
 const Product = require('../model/product/product');
 const Picture = require('../model/product/picture');
+const Review = require('../model/product/review');
 const slugify = require('slugify');
 
 const createProduct = async (req, res) => {

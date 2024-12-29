@@ -45,7 +45,6 @@ const Product = db.define('Product', {
 
     createBy: {
         type: DataTypes.STRING,
-        allowNull: true,
         references: {
             model: User,
             key: 'id'
@@ -54,7 +53,6 @@ const Product = db.define('Product', {
 
     category: {
         type: DataTypes.STRING,
-        allowNull: true,
         references: {
             model: Category,
             key: 'id'

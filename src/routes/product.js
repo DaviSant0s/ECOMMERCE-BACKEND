@@ -3,23 +3,15 @@ const routes = Router();
 
 const { createProduct } = require('../controllers/product')
 const { requiSignin, verifyAdmin } = require('../middlewares/verifyAuthentication');
+const { validateCreateProduct } = require('../middlewares/validation/product');
 
-const multer = require('multer');
-const { nanoid } = require('nanoid');
-const path = require('path');
+const upload = require('../configs/multer');
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, path.join(path.dirname(__dirname), 'uploads'));
-    },
-
-    filename: function (req, file, cb) {
-        cb(null, nanoid() + '-' + file.originalname);
-    }
-});
-
-const upload = multer({ storage });
-
-routes.post('/product/create', requiSignin, verifyAdmin, upload.array('productPicture'), createProduct);
+routes.post('/product/create', 
+    requiSignin, verifyAdmin, 
+    upload.array('productPicture'), 
+    validateCreateProduct, 
+    createProduct
+);
 
 module.exports = routes;
