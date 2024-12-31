@@ -10,8 +10,6 @@ const {
 const validateCreateProduct = (req, res, next) => {
 
     const { name, price, quantity, description, category } = req.body;
-
-    console.log(name, price, quantity, description, category)
     
     const productErrorMessage = (message) => {
         return {

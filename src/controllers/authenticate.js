@@ -51,7 +51,8 @@ const signup = async (req, res) => {
         lastName, 
         username: Math.random().toString(), 
         contactNumber, 
-        profilePicture 
+        profilePicture,
+        role: 'user'
     }
 
     try {

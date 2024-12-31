@@ -50,10 +50,12 @@ const verifyUser = (req, res, next) => {
 
     if (role !== 'user') {
         return res.status(401).json({
-            error: "@authenticate/verifyAdmin",
+            error: "@authenticate/verifyUser",
             message: "User access danied"
         });
     }
+
+    return next();
 
 }
 
