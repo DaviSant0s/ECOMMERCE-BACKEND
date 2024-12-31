@@ -9,5 +9,6 @@ module.exports = {
       dialect: process.env.MYSQL_DIALECT,
     },
     PORT: process.env.PORT,
-    JWT_SECRET: process.env.JWT_SECRET
+    JWT_SECRET: process.env.JWT_SECRET,
+    API: process.env.API
 }

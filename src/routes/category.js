@@ -1,10 +1,18 @@
 const { Router } = require('express');
 const routes = Router();
 
-const { create, getCategories } = require('../controllers/category')
-const { requiSignin, verifyAdmin } = require('../middlewares/verifyAuthentication');
+const { createCategory, getCategories } = require('../controllers/category')
+const { requiSignin, verifyAdmin, verifyUser } = require('../middlewares/verifyAuthentication');
+
+const upload = require('../configs/multer');
     
-routes.post('/category/create', requiSignin, verifyAdmin, create);
+routes.post('/category/create', 
+    requiSignin, 
+    verifyUser, 
+    upload.single('categoryImage'), 
+    createCategory
+);
+
 routes.get('/category/getCategories', getCategories);
 
 module.exports = routes;    

@@ -1,5 +1,6 @@
 const Category = require('../model/category');
 const slugify = require('slugify');
+const { API } = require('../configs/env');
 
 const createCategories = (categories, parentId=null) => {
 
@@ -23,20 +24,24 @@ const createCategories = (categories, parentId=null) => {
     return categoryList;
 }
 
-const create = async (req, res) => {
+const createCategory = async (req, res) => {
 
     const { name, parentId } = req.body;
+    const file = req.file;
 
-    const categoryObj = {
+    console.log('euuuuu')
+    const categoryData = {
         name,
         slug: slugify(name)
     }
 
-    if (parentId) categoryObj.parentId = parentId; 
+    if(file) categoryData.categoryImage = API + '/public/' + file.filename;
+
+    if (parentId) categoryData.parentId = parentId; 
 
     try {
 
-        const cat = await Category.create(categoryObj);
+        const cat = await Category.create(categoryData);
 
         if(!cat) throw new Error();
 
@@ -68,6 +73,6 @@ const getCategories = async (req, res) => {
 }
 
 module.exports = {
-    create,
+    createCategory,
     getCategories
 }

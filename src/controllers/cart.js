@@ -33,7 +33,8 @@ const addItemToCart = async (req, res) => {
 
         } else {
             const updatedQuantity = cartItem.quantity + quantity;
-            await cartItem.update({ quantity: updatedQuantity }, { transaction });
+            const updatedPrice = updatedQuantity * price;
+            await cartItem.update({ quantity: updatedQuantity, price: updatedPrice }, { transaction });
         }
 
         if (!cartItem) throw new Error();

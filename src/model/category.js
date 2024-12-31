@@ -21,6 +21,10 @@ const Category = db.define('Category', {
         unique: true,
     },
 
+    categoryImage: {
+        type: DataTypes.STRING,
+    },
+
     parentId: {
         type: DataTypes.STRING,
     },
