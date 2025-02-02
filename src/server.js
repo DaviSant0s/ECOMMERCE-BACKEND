@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const cors = require('cors');
 
 app.use(express.json());
 app.use('/public', express.static(path.join(__dirname, 'uploads')));
@@ -16,6 +17,7 @@ const categoryRoutes = require('./routes/category');
 const productRoutes = require('./routes/product');
 const cartRoutes = require('./routes/cart');
 
+app.use(cors());
 app.use('/api', adminRoutes);
 app.use('/api', authenticateRoutes);
 app.use('/api', userRoutes);
