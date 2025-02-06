@@ -6,7 +6,7 @@ const { compareHash } = require('../utils/hashProvider');
 const { JWT_SECRET } = require('../configs/env');
 
 const signin =  async (req, res) => {
-    const { hash_password, email } = req.body
+    const { password, email } = req.body
 
     try {
         // 'raw: true' possibilitar retornar os dados do banco como um objeto javascript simples
@@ -14,7 +14,7 @@ const signin =  async (req, res) => {
 
         if (!user) throw new Error();
   
-        const isValidPassword = await compareHash(hash_password, user.hash_password);
+        const isValidPassword = await compareHash(password, user.password);
         if (!isValidPassword) throw new Error();
 
         const id = user.id;
@@ -37,7 +37,7 @@ const signin =  async (req, res) => {
 
 const signup = async (req, res) => {
 
-    const { hash_password, email, 
+    const { password, email, 
             firstName, lastName, 
             username, contactNumber, 
             profilePicture 
@@ -45,7 +45,7 @@ const signup = async (req, res) => {
 
 
     const UserData = { 
-        hash_password, 
+        password, 
         email, 
         firstName, 
         lastName, 
@@ -64,7 +64,7 @@ const signup = async (req, res) => {
 
         if(!user) throw new Error();
 
-        return res.status(201).json(user);
+        return res.status(201).json({ message: "User created Successfully"});
         
     } catch (error) {
         return res.status(400).json({

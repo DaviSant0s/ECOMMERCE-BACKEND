@@ -9,7 +9,7 @@ const {
 
 const validateSignin = (req, res, next) => {
 
-    const { hash_password, email } = req.body
+    const { password, email } = req.body
 
     const signinErrorMessage = (message) => {
         return {
@@ -20,7 +20,7 @@ const validateSignin = (req, res, next) => {
 
     const errors = [
         validateEmail(email),
-        validatePassword(hash_password)
+        validatePassword(password)
     ].filter(Boolean);
 
 
@@ -33,7 +33,7 @@ const validateSignin = (req, res, next) => {
 }
 
 const validateSignup = (req, res, next) => {
-    const { hash_password, email, 
+    const { password, email, 
         firstName, lastName, 
         username, contactNumber, 
         profilePicture 
@@ -50,8 +50,8 @@ const validateSignup = (req, res, next) => {
         validateFirstName(firstName),
         validateLastName(lastName),
         validateEmail(email),
-        validatePassword(hash_password),
-        validateContactNumber(contactNumber)
+        validatePassword(password),
+        //validateContactNumber(contactNumber)
     ].filter(Boolean);
 
     if (errors.length > 0){

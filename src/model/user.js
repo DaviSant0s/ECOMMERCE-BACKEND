@@ -41,7 +41,7 @@ const User = db.define('User', {
         unique: true,
     },
 
-    hash_password: {
+    password: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -65,15 +65,15 @@ const User = db.define('User', {
 });
 
 User.beforeCreate( async (user) => {
-    const hashedPassword = await generateHash(user.hash_password);
+    const hashedPassword = await generateHash(user.password);
     const hashed_id = uuid.v4()
-    user.hash_password = hashedPassword;
+    user.password = hashedPassword;
     user.id = hashed_id;
 });
 
 User.beforeUpdate( async (user) => {
-    const hashedPassword = await generateHash(user.hash_password);
-    user.hash_password = hashedPassword;
+    const hashedPassword = await generateHash(user.password);
+    user.password = hashedPassword;
 });
 
 module.exports = User;
