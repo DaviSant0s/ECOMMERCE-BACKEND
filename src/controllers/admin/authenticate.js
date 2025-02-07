@@ -23,6 +23,8 @@ const signin =  async (req, res) => {
 
         const token = jwt.sign({ id, role}, JWT_SECRET, { expiresIn : 300});
 
+        res.cookie('token', token, { expiresIn: '300ms'}); // criando cookie para guardar informações do token
+
         const fullName = `${user.firstName} ${user.lastName}`;
 
         return res.status(200).json({token, user: {...user, fullName}});
@@ -72,7 +74,18 @@ const signup = async (req, res) => {
     }
 }
 
+const signout = async (req, res) => {
+
+    res.clearCookie('token');
+
+    res.status(200).json({
+        message: 'Signout successfully!'
+    });
+    
+}
+
 module.exports = {
     signin, 
-    signup
+    signup,
+    signout
 }
