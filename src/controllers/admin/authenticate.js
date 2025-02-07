@@ -21,9 +21,9 @@ const signin =  async (req, res) => {
         const id = user.id;
         const role = user.role;
 
-        const token = jwt.sign({ id, role}, JWT_SECRET, { expiresIn : 300});
+        const token = jwt.sign({ id, role}, JWT_SECRET, { expiresIn : 3600});
 
-        res.cookie('token', token, { expiresIn: '300ms'}); // criando cookie para guardar informações do token
+        res.cookie('token', token, { expiresIn: '3600ms'}); // criando cookie para guardar informações do token
 
         const fullName = `${user.firstName} ${user.lastName}`;
 
