@@ -17,6 +17,7 @@ const createCategories = (categories, parentId=null) => {
             id: cat.id,
             name: cat.name,
             slug: cat.slug,
+            parentId: cat.parentId,
             children: createCategories(categories, cat.id)
         });
     }
@@ -45,7 +46,7 @@ const createCategory = async (req, res) => {
 
         if(!cat) throw new Error();
 
-        return res.status(201).json(cat);
+        return res.status(201).json({category: cat});
         
     } catch (error) {
         return res.status(400).json({

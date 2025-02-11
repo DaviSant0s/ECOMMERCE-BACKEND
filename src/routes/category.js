@@ -8,7 +8,7 @@ const upload = require('../configs/multer');
     
 routes.post('/category/create', 
     requiSignin, 
-    verifyUser, 
+    verifyAdmin, 
     upload.single('categoryImage'), 
     createCategory
 );
