@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const routes = Router();
 
-const { createProduct } = require('../controllers/product')
+const { createProduct, getProducts } = require('../controllers/product')
 const { requiSignin, verifyAdmin } = require('../middlewares/verifyAuthentication');
 const { validateCreateProduct } = require('../middlewares/validation/product');
 
@@ -13,5 +13,7 @@ routes.post('/product/create',
     validateCreateProduct, 
     createProduct
 );
+
+routes.get('/product/getProducts', getProducts);
 
 module.exports = routes;
