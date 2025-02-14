@@ -16,6 +16,7 @@ const adminRoutes = require('./routes/admin/authenticate');
 const categoryRoutes = require('./routes/category');
 const productRoutes = require('./routes/product');
 const cartRoutes = require('./routes/cart');
+const initialData = require('./routes/admin/initialData');
 
 app.use(cors());
 app.use('/api', adminRoutes);
@@ -24,6 +25,7 @@ app.use('/api', userRoutes);
 app.use('/api', categoryRoutes);
 app.use('/api', productRoutes);
 app.use('/api', cartRoutes);
+app.use('/api', initialData);
 
 conn.sync()
 .then(() => {
