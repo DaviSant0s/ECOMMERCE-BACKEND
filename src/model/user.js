@@ -66,7 +66,7 @@ const User = db.define('User', {
 
 User.beforeCreate( async (user) => {
     const hashedPassword = await generateHash(user.password);
-    const hashed_id = uuid.v4()
+    const hashed_id = uuid.v4();
     user.password = hashedPassword;
     user.id = hashed_id;
 });

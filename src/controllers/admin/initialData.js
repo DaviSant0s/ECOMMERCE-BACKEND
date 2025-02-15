@@ -16,6 +16,10 @@ const initialData = async (req, res) => {
             },
             {
               model: Review
+            },
+            {
+              model: Category,
+              attributes: [ 'id', 'name']
             }
           ]
         });

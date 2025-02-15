@@ -2,6 +2,7 @@ const Product = require('../model/product/product');
 const Picture = require('../model/product/picture');
 const Review = require('../model/product/review');
 const slugify = require('slugify');
+const Category = require('../model/category');
 
 const createProduct = async (req, res) => {
 
@@ -36,8 +37,30 @@ const createProduct = async (req, res) => {
             ))
         );
 
+        const product_res = await Product.findByPk(product.id, {
+
+            attributes: [ 'id', 'name', 'slug', 'price', 'quantity', 'description', 'offer', 'category'],
+
+            include: [
+                {
+                  model: Picture,
+                  attributes: [ 'id', 'img']
+                },
+                {
+                  model: Review
+                },
+                {
+                  model: Category,
+                  attributes: [ 'id', 'name']
+                }
+              ]
+        });
+
+        if(!product_res) throw new Error();
+
         return res.status(201).json({
-            product: product.toJSON(), 
+            //product: product.toJSON(), 
+            product: product_res,
             productPictures: pictures
         });
         
