@@ -7,6 +7,7 @@ module.exports = {
     options: {
       host: process.env.MYSQL_HOST,
       dialect: process.env.MYSQL_DIALECT,
+      port: process.env.MYSQLPORT
     },
     PORT: process.env.PORT,
     JWT_SECRET: process.env.JWT_SECRET,

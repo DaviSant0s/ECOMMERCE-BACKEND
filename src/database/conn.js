@@ -3,7 +3,8 @@ const { database, options, password, username  } = require('../configs/env');
 
 const sequelize = new Sequelize(database, username, password, {
   host: options.host,
-  dialect: options.dialect
+  dialect: options.dialect,
+  port: options.port
 } );
 
 try {
