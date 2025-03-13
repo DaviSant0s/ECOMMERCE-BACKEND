@@ -7,10 +7,11 @@ const Category = require('../model/category');
 const createProduct = async (req, res) => {
 
     const { name, price, quantity, description, category } = req.body;
-    const files = req.files || [];
     const createBy = req.user.id;
 
-    const productPictures = files.map(file => ({img: file.filename}));
+    const productPictures = req.uploadedImages.map(link => ({img: link}));
+
+    console.log(productPictures);
 
     const productData = {
         name,

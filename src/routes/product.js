@@ -6,11 +6,13 @@ const { requiSignin, verifyAdmin } = require('../middlewares/verifyAuthenticatio
 const { validateCreateProduct } = require('../middlewares/validation/product');
 
 const upload = require('../configs/multer');
+const cloudinary_upload = require('../middlewares/cloudinaryUploader');
 
 routes.post('/product/create', 
     requiSignin, verifyAdmin, 
-    upload.array('productPicture'), 
     validateCreateProduct, 
+    upload.array('productPicture'), 
+    cloudinary_upload,
     createProduct
 );
 
