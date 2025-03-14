@@ -6,7 +6,7 @@ const cloudinary_upload = async (req, res, next) => {
 
     try {
         const uploadPromises = files.map(file => 
-            cloudinary.uploader.upload(file.path)
+            cloudinary.uploader.upload(file.path, { folder: "ecommerce/products" })
         );
 
         const uploadResults = await Promise.all(uploadPromises);
@@ -22,6 +22,7 @@ const cloudinary_upload = async (req, res, next) => {
             message: err.message || "Image upload failed"
         });
     }
+    
 }
 
 module.exports = cloudinary_upload;
