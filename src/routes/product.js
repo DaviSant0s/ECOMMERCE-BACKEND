@@ -10,8 +10,8 @@ const cloudinary_upload = require('../middlewares/cloudinaryUploader');
 
 routes.post('/product/create', 
     requiSignin, verifyAdmin, 
-    validateCreateProduct, 
     upload.array('productPicture'), 
+    validateCreateProduct, 
     cloudinary_upload,
     createProduct
 );

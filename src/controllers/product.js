@@ -11,8 +11,6 @@ const createProduct = async (req, res) => {
 
     const productPictures = req.uploadedImages.map(link => ({img: link}));
 
-    console.log(productPictures);
-
     const productData = {
         name,
         slug: slugify(name, { lower: true }),
