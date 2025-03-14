@@ -1,4 +1,5 @@
 const cloudinary = require('../configs/cloudinary');
+const { nanoid } = require('nanoid');
 
 const cloudinary_upload = async (req, res, next) => {
     
@@ -6,7 +7,10 @@ const cloudinary_upload = async (req, res, next) => {
 
     try {
         const uploadPromises = files.map(file => 
-            cloudinary.uploader.upload(file.path, { folder: "ecommerce/products" })
+            cloudinary.uploader.upload(file.path, { 
+                folder: "ecommerce/products",
+                public_id: nanoid() + '-' + file.originalname
+            })
         );
 
         const uploadResults = await Promise.all(uploadPromises);
