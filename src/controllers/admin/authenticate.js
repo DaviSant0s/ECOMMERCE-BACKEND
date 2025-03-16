@@ -21,7 +21,7 @@ const signin =  async (req, res) => {
         const id = user.id;
         const role = user.role;
 
-        const token = jwt.sign({ id, role}, JWT_SECRET, { expiresIn : 3600});
+        const token = jwt.sign({ id, role}, JWT_SECRET, { expiresIn : 604800}); // expira em uma semana
 
         res.cookie('token', token, { expiresIn: '3600ms'}); // criando cookie para guardar informações do token
 

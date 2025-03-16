@@ -34,7 +34,7 @@ const Product = db.define('Product', {
     },
 
     description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
     },
 

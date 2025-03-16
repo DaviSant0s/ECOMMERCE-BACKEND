@@ -1,0 +1,10 @@
+{
+    "production": {
+      "username": "root",
+      "password": "LKFPAPBRZXLiEPKGHEwoQqmsdzWzkfto",
+      "database": "railway",
+      "host": "hopper.proxy.rlwy.net",
+      "port": 32803,
+      "dialect": "mysql"
+    }
+  }
