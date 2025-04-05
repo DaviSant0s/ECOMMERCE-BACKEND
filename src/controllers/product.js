@@ -86,7 +86,47 @@ const getProducts = async (req, res) => {
     }
 }
 
+const getProductsBySlug = async (req, res) => {
+    const { slug } = req.params;
+    
+    try {
+        const category = await Category.findOne({ where: {slug}, attributes: ['id']});
+
+        if(!category) throw new Error();
+
+        const products = await Product.findAll({ where: { category: category.id }});
+
+        if(!products && products.length === 0) throw new Error();
+
+        const under_250 = products.filter(product => product.price <= 250.00);
+        const between_250_and_500 = products.filter(product => product.price >= 250.00 && product.price <= 500.00);
+        const between_500_and_1000 = products.filter(product => product.price >= 500.00 && product.price <= 1000.00);
+        const between_1000_and_2000 = products.filter(product => product.price >= 1000.00 && product.price <= 2000.00);
+        const over_2000 = products.filter(product => product.price >= 2000.00);
+
+
+        return res.status(200).json({ products,
+            productsByPrice: {
+                under_250,
+                between_250_and_500,
+                between_500_and_1000,
+                between_1000_and_2000,
+                over_2000,
+            }
+         });
+    
+      } catch (error) {
+
+        return res.status(400).json({
+          error: '@products/getBySlug',
+          message: error.message || 'Failed to get products by Slug',
+        });
+    }
+
+}
+
 module.exports = {
     createProduct,
-    getProducts
+    getProducts,
+    getProductsBySlug
 }
