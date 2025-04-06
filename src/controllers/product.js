@@ -97,6 +97,7 @@ const getProductsBySlug = async (req, res) => {
         /*const products = await Product.findAll({ where: { category: category.id }});*/
 
         const products = await Product.findAll({
+            where: { category: category.id },
             attributes: [ 'id', 'name', 'slug', 'price', 'quantity', 'description', 'offer', 'category'],
             include: [
               {
