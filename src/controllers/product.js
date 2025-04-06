@@ -94,7 +94,24 @@ const getProductsBySlug = async (req, res) => {
 
         if(!category) throw new Error();
 
-        const products = await Product.findAll({ where: { category: category.id }});
+        /*const products = await Product.findAll({ where: { category: category.id }});*/
+
+        const products = await Product.findAll({
+            attributes: [ 'id', 'name', 'slug', 'price', 'quantity', 'description', 'offer', 'category'],
+            include: [
+              {
+                model: Picture,
+                attributes: [ 'id', 'img']
+              },
+              {
+                model: Review
+              },
+              {
+                model: Category,
+                attributes: [ 'id', 'name']
+              }
+            ]
+        });
 
         if(!products && products.length === 0) throw new Error();
 
