@@ -8,7 +8,6 @@ const createCategory = async (req, res) => {
     const { name, parentId } = req.body;
     const file = req.file;
 
-    console.log('euuuuu')
     const categoryData = {
         name,
         slug: slugify(name)
@@ -50,7 +49,79 @@ const getCategories = async (req, res) => {
     }
 }
 
+const updateCategories = async (req, res) => {
+    const { id, name, parentId } = req.body;
+
+    const updatedCategories = []
+
+    if (name instanceof Array) {
+        for (let i = 0; i < name.length; i++) {
+            
+            const category = {
+                name: name[i]
+            }
+
+            if(parentId[i] !== "") category.parentId = parentId[i];
+
+            try {
+                
+                const updated = await Category.update(category, {
+                    where: {
+                        id: id[i]
+                    }
+                });
+
+                if(updated[0] == 0) throw new Error();
+
+                const updatedCategory = await Category.findByPk(id[i], { raw: true});
+
+                
+                updatedCategories.push(updatedCategory);
+                
+            } catch (error) {
+                return res.status(400).json({
+                    error: '@categories/update',
+                    message: error.message || 'Failed to update categories',
+                });
+            }
+            
+        }
+        
+        return res.status(200).json({ updatedCategories });
+
+    } else {
+
+        const category = { name }
+
+        if(parentId) category.parentId = parentId;
+
+        try {
+            
+            const updated = await Category.update(category, {
+                where: {
+                    id: id
+                }
+            });
+
+            if(updated[0] == 0) throw new Error();
+
+            const updatedCategory = await Category.findByPk(id, { raw: true});
+
+            return res.status(200).json({ updatedCategories: updatedCategory });
+
+        } catch (error) {
+            return res.status(400).json({
+                error: '@categories/update',
+                message: error.message || 'Failed to update categories',
+            });
+        }
+
+    }
+
+}
+
 module.exports = {
     createCategory,
-    getCategories
+    getCategories,
+    updateCategories
 }
