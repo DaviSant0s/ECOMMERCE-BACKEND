@@ -1,9 +1,9 @@
-const createCategories = (categories, parentId=null) => {
+const createCategories = (categories, parentId="") => {
 
     const categoryList = [];
     let category;
-    if (parentId === null){
-        category = categories.filter(cat => cat.parentId === null);
+    if (parentId === ""){
+        category = categories.filter(cat => cat.parentId === "");
     } else{
         category = categories.filter(cat => cat.parentId === parentId); 
     }

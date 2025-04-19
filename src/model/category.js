@@ -27,6 +27,7 @@ const Category = db.define('Category', {
 
     parentId: {
         type: DataTypes.STRING,
+        allowNull: true
     },
 
 });

@@ -10,7 +10,8 @@ const createCategory = async (req, res) => {
 
     const categoryData = {
         name,
-        slug: slugify(name)
+        slug: slugify(name),
+        parentId: ""
     }
 
     if(file) categoryData.categoryImage = API + '/public/' + file.filename;
@@ -58,7 +59,8 @@ const updateCategories = async (req, res) => {
         for (let i = 0; i < name.length; i++) {
             
             const category = {
-                name: name[i]
+                name: name[i],
+                parentId: ""
             }
 
             if(parentId[i] !== "") category.parentId = parentId[i];
@@ -91,9 +93,12 @@ const updateCategories = async (req, res) => {
 
     } else {
 
-        const category = { name }
+        const category = { 
+            name,
+            parentId: ""
+        }
 
-        if(parentId) category.parentId = parentId;
+        if(parentId !== "") category.parentId = parentId;
 
         try {
             

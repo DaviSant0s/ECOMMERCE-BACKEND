@@ -24,7 +24,7 @@ const initialData = async (req, res) => {
           ]
         });
         
-        const categories = await Category.findAll();
+        const categories = await Category.findAll({raw: true});
 
         return res.status(200).json({ 
           categories: createCategories(categories),
