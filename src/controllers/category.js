@@ -10,7 +10,7 @@ const createCategory = async (req, res) => {
 
     const categoryData = {
         name,
-        slug: slugify(name),
+        slug: slugify(name, { lower: true }),
         parentId: ""
     }
 
