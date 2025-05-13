@@ -114,13 +114,15 @@ const updateCategories = async (req, res) => {
 const deleteCategories = async (req, res) => {
   const { ids } = req.body;
 
+  const idsOnly = ids.map((item) => item.id).filter(Boolean);
+
   const transaction = await db.transaction();
 
   try {
     const deletedCategories = await Category.destroy({
       where: {
         id: {
-          [Op.in]: ids,
+          [Op.in]: idsOnly,
         },
       },
 
