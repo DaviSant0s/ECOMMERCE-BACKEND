@@ -15,9 +15,11 @@ const {
 } = require('../middlewares/verifyAuthentication');
 
 const upload = require('../configs/multer');
+const { validateCreateCategory } = require('../middlewares/validation/category');
 
 routes.post(
   '/category/create',
+  validateCreateCategory,
   requiSignin,
   verifyAdmin,
   upload.single('categoryImage'),
