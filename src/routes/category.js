@@ -19,10 +19,10 @@ const { validateCreateCategory } = require('../middlewares/validation/category')
 
 routes.post(
   '/category/create',
-  validateCreateCategory,
   requiSignin,
   verifyAdmin,
   upload.single('categoryImage'),
+  validateCreateCategory,
   createCategory
 );
 
