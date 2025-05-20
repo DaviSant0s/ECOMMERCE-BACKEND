@@ -61,6 +61,12 @@ const User = db.define('User', {
 
     profilePicture: {
         type: DataTypes.STRING
+    },
+
+    refreshToken: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        unique: true,
     }
 });
 
